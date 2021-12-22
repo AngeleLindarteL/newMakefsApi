@@ -18,7 +18,7 @@ user = APIRouter()
 @user.get("/user/{uid}")
 def createUserData(uid: int):
     if userDC.find_one({"uid": uid}):
-        return "El usuario con id {uid} ya fue creado!"
+        return f"El usuario con id {uid} ya fue creado!"
     new_user = {
         "uid": uid,
         "categories": categoriesInitial,
