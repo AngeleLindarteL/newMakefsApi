@@ -108,7 +108,7 @@ def getVieweds(uid: int):
     return Response(json.dumps({"Status": "Bad request", "ERROR": "ERROR User Not Found"}),400,{"Content-Type":"application/json"})
 
 
-@user.post("/user/{id}/vr")
+@user.post("/user/{uid}/vr")
 def appendViewedRecipe(uid: int, recipe: VRecipe):
     uinfo = userDC.find_one({"uid":uid})
     recipe = dict(recipe)
