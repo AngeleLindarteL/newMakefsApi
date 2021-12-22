@@ -98,7 +98,7 @@ def registerCategoryView(uid: int, cats: Category):
 
 # Routes for viewedVideos
 
-@user.get("/user/{id}/vr")
+@user.get("/user/{uid}/vr")
 def getVieweds(uid: int):
     uinfo = userDC.find_one({"uid":uid})
     if uinfo is not None:
