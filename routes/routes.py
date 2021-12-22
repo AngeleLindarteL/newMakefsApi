@@ -35,7 +35,7 @@ def getUserSortedData(uid: int, data: list):
     if userDC.find_one({"uid": uid}):
         analized = Analize(uid,data)
         print(f"Sorted data: \n {analized}")
-        return Response(json.dumps(analized), 200,{"Content-Type":"application/json"})
+        return Response({"recipes":json.dumps(analized)}, 200,{"Content-Type":"application/json"})
 
     return f"El usuario no existe!!!"
 
