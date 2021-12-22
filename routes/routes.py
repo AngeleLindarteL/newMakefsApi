@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter
 from starlette.responses import Response
 from config.db import userDC
@@ -8,6 +9,7 @@ from models.category import Category
 from models.vrecipe import VRecipe
 from utils.categoriesStructure import categoriesInitial
 from utils.vrStructure import vrInitial
+from utils.algorithm import Analize
 
 import json
 
@@ -27,8 +29,13 @@ def createUserData(uid: int):
     return str(res.inserted_id)
 
 @user.post("/user/{uid}")
-def getUserSortedData(user: User):
-    # Aquí ejecutamnos el algoritmo para ordenamiento
+def getUserSortedData(uid: int, data: list):
+    print(f"incoming data \n {data}")
+    print(f"//////////// \n ")
+    print(f"//////////// \n ")
+    print(f"//////////// \n ")
+    analized = Analize(uid,data)
+    print(f"Sorted data: \n {analized}")
     return "usuario recibido, sorted data lolol oaldaokslasldal"
 
 @user.delete("/user/{uid}")
@@ -40,8 +47,8 @@ def deleteUserData(uid: int):
 # Routes for chef
 @user.get("/user/{uid}/chefs")
 def obtainAllChefs(uid: int):
-    res = userDC.find_one({"uid": uid})
-    return str(res["chefs"])
+    res = dict(userDC.find_one({"uid": uid}, {"_id":0,"chefs":1})).get("chefs")
+    return res
 
 @user.post("/user/{uid}/chefs")
 def interactWithChef(uid: int, chef: Chef):
