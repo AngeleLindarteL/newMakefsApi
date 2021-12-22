@@ -32,13 +32,12 @@ def createUserData(uid: int):
 
 @user.post("/user/{uid}")
 def getUserSortedData(uid: int, data: list):
-    print(f"incoming data \n {data}")
-    print(f"//////////// \n ")
-    print(f"//////////// \n ")
-    print(f"//////////// \n ")
-    analized = Analize(uid,data)
-    print(f"Sorted data: \n {analized}")
-    return "usuario recibido, sorted data lolol oaldaokslasldal"
+    if userDC.find_one({"uid": uid}):
+        analized = Analize(uid,data)
+        print(f"Sorted data: \n {analized}")
+        return Response(json.dumps(analized), 200,{"Content-Type":"application/json"})
+
+    return f"El usuario no existe!!!"
 
 @user.delete("/user/{uid}")
 def deleteUserData(uid: int):
@@ -125,7 +124,7 @@ def appendViewedRecipe(uid: int, recipe: VRecipe):
         userDC.find_one_and_update({"uid": uid}, {"$set": {"viewedRecipes":rInfo}})
 
         print(rInfo)
-        pass
+        return Response(json.dumps({"Status": "200 Ok", "Msg": "Good Ending"}),200,{"Content-Type":"application/json"})
 
     return Response(json.dumps({"Status": "Bad request", "ERROR": "ERROR User Not Found"}),400,{"Content-Type":"application/json"})
     
